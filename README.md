@@ -4,7 +4,8 @@ This repository contains all of my solutions for Advent of Code
 
 ## Years
 
-...
+- [2023](./aoc2023/README.md)
+- 2024 (soon)
 
 ## Usage
 

@@ -1,0 +1,10 @@
+[package]
+name = "aoc2023"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aoc = { path = "../aoc" }
+hashbrown = "0.15.2"
+itertools = "0.13.0"
+num-integer = "0.1.46"

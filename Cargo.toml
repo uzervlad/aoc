@@ -3,4 +3,5 @@ resolver = "2"
 
 members = [
   "aoc",
+  "aoc2023",
 ]
