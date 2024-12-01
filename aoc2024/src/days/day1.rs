@@ -6,8 +6,8 @@ pub struct Day;
 
 impl DaySolver for Day {
   fn one(&self, input: &str) -> DayResult {
-    let mut a = vec![];
-    let mut b = vec![];
+    let mut a = Vec::with_capacity(1000);
+    let mut b = Vec::with_capacity(1000);
     
     for (_a, _b) in input.lines()
       .filter_map(|line| line.split_once("   "))
@@ -20,17 +20,16 @@ impl DaySolver for Day {
     a.sort_unstable();
     b.sort_unstable();
 
-    let mut sum = 0;
-    for i in 0..a.len() {
-      sum += a[i].abs_diff(b[i]);
-    }
+    let sum = (0..a.len())
+      .map(|i| a[i].abs_diff(b[i]))
+      .sum::<u32>();
 
     DayResult::Success(sum as i64)
   }
 
   fn two(&self, input: &str) -> DayResult {
-    let mut a = vec![];
-    let mut b = HashMap::new();
+    let mut a = Vec::with_capacity(1000);
+    let mut b = HashMap::with_capacity(1000);
     
     for (_a, _b) in input.lines()
       .filter_map(|line| line.split_once("   "))
@@ -40,10 +39,9 @@ impl DaySolver for Day {
       *b.entry(_b).or_insert(0) += 1;
     }
 
-    let mut sum = 0;
-    for i in 0..a.len() {
-      sum += a[i] * b.get(&a[i]).unwrap_or(&0);
-    }
+    let sum = (0..a.len())
+      .map(|i| a[i] * b.get(&a[i]).unwrap_or(&0))
+      .sum::<u32>();
 
     DayResult::Success(sum as i64)
   }
