@@ -9,15 +9,16 @@ impl DaySolver for Day {
     let mut a = vec![];
     let mut b = vec![];
     
-    for line in input.lines()
-      .map(|line| line.split_ascii_whitespace().map(|s| s.parse::<u32>().unwrap()).collect::<Vec<_>>())
+    for (_a, _b) in input.lines()
+      .filter_map(|line| line.split_once("   "))
+      .map(|(_a, _b)| (_a.parse::<u32>().unwrap(), _b.parse::<u32>().unwrap()))
     {
-      a.push(line[0]);
-      b.push(line[1]);
+      a.push(_a);
+      b.push(_b);
     }
 
-    a.sort();
-    b.sort();
+    a.sort_unstable();
+    b.sort_unstable();
 
     let mut sum = 0;
     for i in 0..a.len() {
@@ -31,14 +32,12 @@ impl DaySolver for Day {
     let mut a = vec![];
     let mut b = HashMap::new();
     
-    for line in input.lines()
-      .map(|line| line.split_ascii_whitespace().map(|s| s.parse::<u32>().unwrap()).collect::<Vec<_>>())
+    for (_a, _b) in input.lines()
+      .filter_map(|line| line.split_once("   "))
+      .map(|(_a, _b)| (_a.parse::<u32>().unwrap(), _b.parse::<u32>().unwrap()))
     {
-      a.push(line[0]);
-      match b.contains_key(&line[1]) {
-        false => b.insert(line[1], 1),
-        true => b.insert(line[1], b[&line[1]] + 1),
-      };
+      a.push(_a);
+      *b.entry(_b).or_insert(0) += 1;
     }
 
     let mut sum = 0;
