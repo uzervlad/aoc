@@ -16,5 +16,5 @@ export async function fetchInput(year: string, day: string) {
   })
     .then(r => r.text());
 
-  await Bun.write(`aoc${year}/inputs/${day}.txt`, input!);
+  await Bun.write(`inputs/${year}/${day}.txt`, input!);
 }

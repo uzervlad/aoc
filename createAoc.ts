@@ -9,25 +9,23 @@ export async function createAoC(year: string) {
 
   if(!await Bun.file(`aoc${year}/Cargo.toml`).exists()) {
     console.log("Creating package");
-    await Bun.$`cargo new aoc${year}`.quiet();
+    await Bun.$`cargo new aoc${year} --lib`.quiet();
 
     await rm(`aoc${year}/.git`, { recursive: true, force: true });
 
     console.log("Adding aoc dependency");
     await appendFile(`aoc${year}/Cargo.toml`, `aoc = { path = "../aoc" }\n`);
 
-    await rm(`aoc${year}/src/main.rs`);
+    await mkdir(`inputs/${year}`)
+    await Bun.write(`inputs/${year}/.gitkeep`, "");
 
-    await mkdir(`aoc${year}/inputs`);
-    await Bun.write(`aoc${year}/inputs/.gitkeep`, "");
-    await appendFile(`aoc${year}/.gitignore`, "/inputs/*.txt\n");
+    await appendFile(`aocrunner/Cargo.toml`, `aoc${year} = { path = "./aoc${year}" }\n`);
   }
 
   const templateFiles = [
     "README.md",
     "src/days/mod.rs",
     "src/lib.rs",
-    "src/main.rs",
   ];
 
   for(let file of templateFiles) {

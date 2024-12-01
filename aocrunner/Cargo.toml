@@ -1,0 +1,13 @@
+[package]
+name = "aocrunner"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenvy = "0.15.7"
+reqwest = { version = "0.12.9", features = ["blocking"] }
+aoc = { path = "../aoc" }
+aoc2023 = { path = "../aoc2023" }
+aoc2024 = { path = "../aoc2024" }
+clap = { version = "4.5.21", features = ["derive"] }
+ascii_table = "4.0.5"

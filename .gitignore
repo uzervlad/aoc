@@ -175,3 +175,4 @@ dist
 .DS_Store
 
 /target
+/inputs/*/*.txt
