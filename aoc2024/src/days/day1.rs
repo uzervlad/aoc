@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::iter::zip;
 
 use aoc::{DayResult, DaySolver};
 
@@ -6,42 +6,49 @@ pub struct Day;
 
 impl DaySolver for Day {
   fn one(&self, input: &str) -> DayResult {
-    let mut a = Vec::with_capacity(1000);
-    let mut b = Vec::with_capacity(1000);
+    let mut a = [0; 1000];
+    let mut b = [0; 1000];
     
-    for (_a, _b) in input.lines()
-      .filter_map(|line| line.split_once("   "))
-      .map(|(_a, _b)| (_a.parse::<u32>().unwrap(), _b.parse::<u32>().unwrap()))
+    for (i, (_a, _b)) in input.lines()
+      .map(|line| unsafe {
+        (
+          u32::from_str_radix(&line[0..5], 10).unwrap_unchecked(),
+          u32::from_str_radix(&line[8..13], 10).unwrap_unchecked(),
+        )
+      })
+      .enumerate()
     {
-      a.push(_a);
-      b.push(_b);
+      a[i] = _a;
+      b[i] = _b;
     }
 
     a.sort_unstable();
     b.sort_unstable();
 
-    let sum = (0..a.len())
-      .map(|i| a[i].abs_diff(b[i]))
-      .sum::<u32>();
-
+    let sum = zip(a.iter(), b.iter())
+      .fold(0, |acc, (a, b)| acc + a.abs_diff(*b));
     DayResult::Success(sum as i64)
   }
 
   fn two(&self, input: &str) -> DayResult {
-    let mut a = Vec::with_capacity(1000);
-    let mut b = HashMap::with_capacity(1000);
-    
-    for (_a, _b) in input.lines()
-      .filter_map(|line| line.split_once("   "))
-      .map(|(_a, _b)| (_a.parse::<u32>().unwrap(), _b.parse::<u32>().unwrap()))
+    let mut a = [0; 1000];
+    let mut b = [0; 100000];
+
+    for (i, (_a, _b)) in input.lines()
+      .map(|line| unsafe {
+        (
+          u32::from_str_radix(&line[0..5], 10).unwrap_unchecked(),
+          u32::from_str_radix(&line[8..13], 10).unwrap_unchecked(),
+        )
+      })
+      .enumerate()
     {
-      a.push(_a);
-      *b.entry(_b).or_insert(0) += 1;
+      a[i] = _a;
+      b[_b as usize] += 1;
     }
 
-    let sum = (0..a.len())
-      .map(|i| a[i] * b.get(&a[i]).unwrap_or(&0))
-      .sum::<u32>();
+    let sum = a.iter()
+      .fold(0, |acc, a| acc + a * b[*a as usize]);
 
     DayResult::Success(sum as i64)
   }
