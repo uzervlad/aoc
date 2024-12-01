@@ -88,6 +88,28 @@ struct Cli {
   runs: usize,
 }
 
+fn benchmark_values(mut runs: Vec<u128>) -> (u128, u128, usize) {
+  let mean = runs.iter().sum::<u128>() / runs.len() as u128;
+
+  let variance = runs.iter()
+    .map(|r| r.abs_diff(mean).pow(2))
+    .sum::<u128>() / runs.len() as u128;
+
+  let stddev = (variance as f64).sqrt();
+
+  let a = runs.len();
+  runs.retain(|r| (r.abs_diff(mean) / stddev as u128) <= 3);
+  
+  let removed = a - runs.len();
+
+  if removed > 0 {
+    let (mean, stddev, removed_new) = benchmark_values(runs);
+    (mean, stddev, removed + removed_new)
+  } else {
+    (mean, stddev as u128, removed)
+  }
+}
+
 fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
   println!("Running {} times", runs_count);
 
@@ -98,21 +120,18 @@ fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
       let _ = solver.one(&input);
       let elapsed = start.elapsed();
 
-      runs.push(elapsed);
+      runs.push(elapsed.as_nanos());
     }
 
-    let mean = runs.iter().sum::<Duration>() / runs.len() as u32;
-    let variance = runs.iter()
-      .map(|r| r.abs_diff(mean).as_nanos().pow(2))
-      .sum::<u128>() / runs.len() as u128;
+    let (mean, stddev, removed) = benchmark_values(runs);
 
-    let stddev = (variance as f64).sqrt();
-
+    let mean = Duration::from_nanos(mean as u64);
     let stddev = Duration::from_nanos(stddev as u64);
 
     println!("Part one:");
     println!("Mean: {:?}", mean);
     println!("Stddev: {:?}", stddev);
+    println!("Removed {} outliers", removed);
   }
 
   {
@@ -122,21 +141,18 @@ fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
       let _ = solver.two(&input);
       let elapsed = start.elapsed();
 
-      runs.push(elapsed);
+      runs.push(elapsed.as_nanos());
     }
 
-    let mean = runs.iter().sum::<Duration>() / runs.len() as u32;
-    let variance = runs.iter()
-      .map(|r| r.abs_diff(mean).as_nanos().pow(2))
-      .sum::<u128>() / runs.len() as u128;
+    let (mean, stddev, removed) = benchmark_values(runs);
 
-    let stddev = (variance as f64).sqrt();
-
+    let mean = Duration::from_nanos(mean as u64);
     let stddev = Duration::from_nanos(stddev as u64);
 
     println!("Part two:");
     println!("Mean: {:?}", mean);
     println!("Stddev: {:?}", stddev);
+    println!("Removed {} outliers", removed);
   }
 }
 
