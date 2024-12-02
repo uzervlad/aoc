@@ -5,7 +5,7 @@ use clap::{command, Parser};
 use reqwest::{blocking::ClientBuilder, header::HeaderMap};
 
 fn submit_answer(year: u16, day: u8, level: u8, answer: i64) {
-  if dotenvy::from_path("../.env").is_err() {
+  if dotenvy::from_path(".env").is_err() {
     println!("Unable to read .env");
     return;
   }
