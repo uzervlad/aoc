@@ -98,7 +98,7 @@ fn benchmark_values(mut runs: Vec<u128>) -> (u128, u128, usize) {
   let stddev = (variance as f64).sqrt();
 
   let a = runs.len();
-  runs.retain(|r| (r.abs_diff(mean) / stddev as u128) <= 3);
+  runs.retain(|r| (r.abs_diff(mean) as f64 / (stddev + f64::EPSILON)) <= 3.);
   
   let removed = a - runs.len();
 
