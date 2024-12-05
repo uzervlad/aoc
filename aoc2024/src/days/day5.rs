@@ -17,21 +17,15 @@ pub struct Day;
 
 impl DaySolver for Day {
   fn one(&self, input: &str) -> DayResult {
-    let lines = input.lines();
+    let (rules, updates) = input.split_once("\n\n").unwrap();
 
-    let mut rules = Vec::<(u32, u32)>::new();
-
-    for line in lines.clone() {
-      if line.is_empty() {
-        break;
-      }
-
+    let rules = rules.lines().map(|line| {
       let (a, b) = line.split_once('|').unwrap();
       
-      rules.push((a.parse().unwrap(), b.parse().unwrap()));
-    }
+      (a.parse().unwrap(), b.parse().unwrap())
+    }).collect::<Vec<_>>();
 
-    let sum = lines.skip(rules.len() + 1).map(|line| {
+    let sum = updates.lines().map(|line| {
       let pages = line.split(',')
         .map(|n| n.parse().unwrap())
         .collect::<Vec<_>>();
@@ -50,21 +44,15 @@ impl DaySolver for Day {
   }
 
   fn two(&self, input: &str) -> DayResult {
-    let lines = input.lines();
+    let (rules, updates) = input.split_once("\n\n").unwrap();
 
-    let mut rules = Vec::<(u32, u32)>::new();
-
-    for line in lines.clone() {
-      if line.is_empty() {
-        break;
-      }
-
+    let rules = rules.lines().map(|line| {
       let (a, b) = line.split_once('|').unwrap();
       
-      rules.push((a.parse().unwrap(), b.parse().unwrap()));
-    }
+      (a.parse().unwrap(), b.parse().unwrap())
+    }).collect::<Vec<_>>();
 
-    let sum = lines.skip(rules.len() + 1).map(|line| {
+    let sum = updates.lines().map(|line| {
       let mut pages = line.split(',')
         .map(|n| n.parse().unwrap())
         .collect::<Vec<_>>();
