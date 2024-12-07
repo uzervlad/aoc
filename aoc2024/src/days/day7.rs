@@ -81,6 +81,10 @@ impl DaySolver for Day {
           result = operator.apply(result, element);
         }
 
+        if result > total {
+          break
+        }
+
         if result == total {
           total_calibration += total;
           break
