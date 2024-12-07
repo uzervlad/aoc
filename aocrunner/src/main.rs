@@ -131,7 +131,7 @@ fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
     println!("Part one:");
     println!("Mean: {:?}", mean);
     println!("Stddev: {:?}", stddev);
-    println!("Removed {} outliers", removed);
+    println!("Removed {} outliers ({:.3}%)", removed, removed as f64 / runs_count as f64 * 100.);
   }
 
   {
@@ -152,7 +152,7 @@ fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
     println!("Part two:");
     println!("Mean: {:?}", mean);
     println!("Stddev: {:?}", stddev);
-    println!("Removed {} outliers", removed);
+    println!("Removed {} outliers ({:.3}%)", removed, removed as f64 / runs_count as f64 * 100.);
   }
 }
 
