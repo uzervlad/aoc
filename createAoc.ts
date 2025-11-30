@@ -29,13 +29,9 @@ export async function createAoC(year: string) {
   ];
 
   for(let file of templateFiles) {
-    if(await Bun.file(`aoc${year}/${file}`).exists()) {
-      console.log(`${file} already exists`);
-    } else {
-      console.log(`Creating ${file}`);
+    console.log(`Creating ${file}`);
 
-      Bun.write(`aoc${year}/${file}`, (await Bun.file(`template/${file}`).text()).replace(/{{year}}/g, year));
-    }
+    Bun.write(`aoc${year}/${file}`, (await Bun.file(`template/${file}`).text()).replace(/{{year}}/g, year));
   }
 
   const DAY_SOLVER = `use aoc::{DayResult, DaySolver};
