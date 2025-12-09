@@ -36,17 +36,17 @@ export async function createAoC(year: string) {
 
   const DAY_SOLVER = `use aoc::{DayResult, DaySolver};
 
-  pub struct Day;
+pub struct Day;
 
-  impl DaySolver for Day {
-    fn one(&self, _: &str) -> DayResult {
-      DayResult::Todo
-    }
+impl DaySolver for Day {
+  fn one(&self, _: &str) -> DayResult {
+    DayResult::Todo
+  }
 
-    fn two(&self, _: &str) -> DayResult {
-      DayResult::Todo
-    }
-  }`;
+  fn two(&self, _: &str) -> DayResult {
+    DayResult::Todo
+  }
+}`;
 
   for(let day = 1; day <= 25; day++) {
     if(!await Bun.file(`aoc${year}/src/days/day${day}.rs`).exists()) {
