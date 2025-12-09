@@ -70,7 +70,6 @@ impl DaySolver for Day {
       match result {
         Some(_) => continue,
         None => {
-          println!();
           return DayResult::success(format!("{},{}", a, b))
         }
       }
