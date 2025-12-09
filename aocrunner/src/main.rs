@@ -69,6 +69,7 @@ fn get_day_resolver(year: u16) -> DayResolver {
   match year {
     2023 => aoc2023::get_day,
     2024 => aoc2024::get_day,
+    2025 => aoc2025::get_day,
     _ => unreachable!(),
   }
 }
@@ -156,7 +157,7 @@ fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
   }
 }
 
-fn run(year: u16, day: u8, solver: Box<dyn DaySolver>, input: &str) {
+fn run(year: u16, day: u8, solver: Box<dyn DaySolver>, input: &str, submit: bool) {
   {
     let start = Instant::now();
     let one = solver.one(&input);
@@ -167,7 +168,7 @@ fn run(year: u16, day: u8, solver: Box<dyn DaySolver>, input: &str) {
         println!("Part one solution: {}", one);
         println!("Time: {:?}", elapsed);
 
-        if prompt_submit() {
+        if submit && prompt_submit() {
           submit_answer(year, day, 1, one);
         }
       },
@@ -190,7 +191,7 @@ fn run(year: u16, day: u8, solver: Box<dyn DaySolver>, input: &str) {
         println!("Part two solution: {}", two);
         println!("Time: {:?}", elapsed);
 
-        if prompt_submit() {
+        if submit && prompt_submit() {
           submit_answer(year, day, 2, two);
         }
       },
@@ -209,6 +210,7 @@ fn main() {
 
   let resolver = get_day_resolver(args.year);
 
+  let submit = args.suffix.is_none();
   let suffix = match args.suffix {
     Some(suffix) => format!(".{}", suffix),
     None => "".to_string(),
@@ -234,6 +236,6 @@ fn main() {
   if args.bench {
     benchmark(solver, &input, args.runs);
   } else {
-    run(args.year, args.day, solver, &input);
+    run(args.year, args.day, solver, &input, submit);
   }  
 }
