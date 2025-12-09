@@ -109,7 +109,7 @@ impl DaySolver for Day {
 
     // println!("{}", itertools::join(computer.output.iter(), ","));
 
-    DayResult::Success(computer.output.iter().fold(0, |a, &b| a * 10 + b as i64))
+    DayResult::success(computer.output.iter().fold(0, |a, &b| a * 10 + b as i64))
   }
 
   fn two(&self, _: &str) -> DayResult {

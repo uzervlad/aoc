@@ -109,7 +109,7 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(moves / 2)
+    DayResult::success(moves / 2)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -230,6 +230,6 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(enclosed as i64)
+    DayResult::success(enclosed)
   }
 }

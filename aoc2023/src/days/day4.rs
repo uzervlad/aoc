@@ -14,12 +14,12 @@ pub struct Day;
 
 impl DaySolver for Day {
   fn one(&self, input: &str) -> DayResult {
-    DayResult::Success(
+    DayResult::success(
       input
         .lines()
         .map(get_score)
         .map(|score| if score > 0 { 1 << score - 1 } else { 0 })
-        .sum::<u32>() as i64)
+        .sum::<u32>())
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -33,6 +33,6 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(cards.iter().sum::<u32>() as i64)
+    DayResult::success(cards.iter().sum::<u32>())
   }
 }

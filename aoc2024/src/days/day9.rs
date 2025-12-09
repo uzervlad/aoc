@@ -43,7 +43,7 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(sum as i64)
+    DayResult::success(sum)
   }
 
   fn two(&self, _: &str) -> DayResult {

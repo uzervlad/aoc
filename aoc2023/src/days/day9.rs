@@ -34,10 +34,10 @@ pub struct Day;
 
 impl DaySolver for Day {
   fn one(&self, input: &str) -> DayResult {
-    DayResult::Success(solve(&get_sequences(input), false) as i64)
+    DayResult::success(solve(&get_sequences(input), false))
   }
 
   fn two(&self, input: &str) -> DayResult {
-    DayResult::Success(solve(&get_sequences(input), true) as i64)
+    DayResult::success(solve(&get_sequences(input), true))
   }
 }

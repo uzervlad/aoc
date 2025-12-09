@@ -44,7 +44,7 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(sum as i64)
+    DayResult::success(sum)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -69,6 +69,6 @@ impl DaySolver for Day {
       sum += max_table.red * max_table.green * max_table.blue
     }
 
-    DayResult::Success(sum as i64)
+    DayResult::success(sum)
   }
 }

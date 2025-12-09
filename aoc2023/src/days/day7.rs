@@ -112,7 +112,7 @@ impl DaySolver for Day {
       .map(|(i, hand)| hand.bid * (hands.len() - i) as u32)
       .sum::<u32>();
 
-    DayResult::Success(winnings as i64)
+    DayResult::success(winnings)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -168,6 +168,6 @@ impl DaySolver for Day {
       .map(|(i, hand)| hand.bid * (hands.len() - i) as u32)
       .sum::<u32>();
 
-    DayResult::Success(winnings as i64)
+    DayResult::success(winnings)
   }
 }

@@ -55,12 +55,12 @@ impl DaySolver for Day {
   fn one(&self, input: &str) -> DayResult {
     let (galaxies, empty_rows, empty_cols) = get_inputs(input);
 
-    DayResult::Success(count_pairs(&galaxies, &empty_rows, &empty_cols, 2) as i64)
+    DayResult::success(count_pairs(&galaxies, &empty_rows, &empty_cols, 2))
   }
 
   fn two(&self, input: &str) -> DayResult {
     let (galaxies, empty_rows, empty_cols) = get_inputs(input);
 
-    DayResult::Success(count_pairs(&galaxies, &empty_rows, &empty_cols, 1000000) as i64)
+    DayResult::success(count_pairs(&galaxies, &empty_rows, &empty_cols, 1000000))
   }
 }

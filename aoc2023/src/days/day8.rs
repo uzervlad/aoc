@@ -49,7 +49,7 @@ impl DaySolver for Day {
   fn one(&self, input: &str) -> DayResult {
     let (nodes, steps) = get_inputs(input);
 
-    DayResult::Success(solve_node("AAA", &nodes, &steps) as i64)
+    DayResult::success(solve_node("AAA", &nodes, &steps))
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -65,6 +65,6 @@ impl DaySolver for Day {
       lcm = num_integer::lcm(lcm, factors[i]);
     }
 
-    DayResult::Success(lcm as i64)
+    DayResult::success(lcm)
   }
 }

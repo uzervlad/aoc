@@ -44,7 +44,7 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(sum as i64)
+    DayResult::success(sum)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -88,9 +88,9 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(gears.iter()
+    DayResult::success(gears.iter()
       .filter(|gear| gear.parts.len() == 2)
       .map(|gear| gear.parts[0] * gear.parts[1])
-      .sum::<u32>() as i64)
+      .sum::<u32>())
   }
 }

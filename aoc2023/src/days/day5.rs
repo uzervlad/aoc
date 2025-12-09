@@ -103,22 +103,22 @@ impl DaySolver for Day {
   fn one(&self, input: &str) -> DayResult {
     let (seeds, maps) = get_inputs(input);
 
-    DayResult::Success(
+    DayResult::success(
       seeds.iter()
         .map(|s| map_seed(*s, &maps))
-        .min().unwrap() as i64
+        .min().unwrap()
     )
   }
 
   fn two(&self, input: &str) -> DayResult {
     let (seeds, maps) = get_inputs(input);
 
-    DayResult::Success(
+    DayResult::success(
       seeds.chunks(2)
         .map(|c| c[0]..c[0]+c[1])
         .map(|r| map_seed_range(r, &maps))
         .min()
-        .unwrap() as i64
+        .unwrap()
     )
   }
 }

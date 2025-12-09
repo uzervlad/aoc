@@ -15,7 +15,7 @@ impl DaySolver for Day {
       calibration_value += a * 10 + b;
     }
   
-    DayResult::Success(calibration_value as i64)
+    DayResult::success(calibration_value)
   }
   
   fn two(&self, input: &str) -> DayResult {
@@ -67,6 +67,6 @@ impl DaySolver for Day {
       calibration_value += a * 10 + b;
     }
   
-    DayResult::Success(calibration_value as i64)
+    DayResult::success(calibration_value)
   }
 }

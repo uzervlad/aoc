@@ -37,7 +37,7 @@ impl DaySolver for Day {
       }
     }).sum::<u32>();
 
-    DayResult::Success(sum as i64)
+    DayResult::success(sum)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -75,6 +75,6 @@ impl DaySolver for Day {
       }
     }).sum::<u32>();
 
-    DayResult::Success(sum as i64)
+    DayResult::success(sum)
   }
 }

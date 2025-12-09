@@ -92,7 +92,7 @@ impl DaySolver for Day {
       })
       .sum::<usize>();
 
-    DayResult::Success(xmas as i64)
+    DayResult::success(xmas)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -147,6 +147,6 @@ impl DaySolver for Day {
       .filter(|&x| x)
       .count();
 
-    DayResult::Success(x_mas as i64)
+    DayResult::success(x_mas)
   }
 }

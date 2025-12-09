@@ -179,7 +179,7 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(sum)
+    DayResult::success(sum)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -197,6 +197,6 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(sum)
+    DayResult::success(sum)
   }
 }

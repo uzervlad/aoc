@@ -52,7 +52,7 @@ impl DaySolver for Day {
       tokens += (a as i64) * 3 + b as i64
     }
 
-    DayResult::Success(tokens)
+    DayResult::success(tokens)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -87,6 +87,6 @@ impl DaySolver for Day {
       tokens += (a as i64) * 3 + b as i64
     }
 
-    DayResult::Success(tokens)
+    DayResult::success(tokens)
   }
 }

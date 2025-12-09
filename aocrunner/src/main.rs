@@ -1,10 +1,10 @@
 use std::{env, io::{stdin, stdout, Write}, time::{Duration, Instant}};
 
-use aoc::{DayResolver, DayResult, DaySolver};
-use clap::{command, Parser};
+use aoc::{DayResolver, DayResult, DayResultValue, DaySolver};
+use clap::Parser;
 use reqwest::{blocking::ClientBuilder, header::HeaderMap};
 
-fn submit_answer(year: u16, day: u8, level: u8, answer: i64) {
+fn submit_answer(year: u16, day: u8, level: u8, answer: DayResultValue) {
   if dotenvy::from_path(".env").is_err() {
     println!("Unable to read .env");
     return;
@@ -213,7 +213,7 @@ fn main() {
   let submit = args.suffix.is_none();
   let suffix = match args.suffix {
     Some(suffix) => format!(".{}", suffix),
-    None => "".to_string(),
+    None => "".into(),
   };
 
   let filename = format!("inputs/{}/{}{}.txt", args.year, args.day, suffix);

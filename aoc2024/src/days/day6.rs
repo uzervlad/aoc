@@ -81,7 +81,7 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(visited.len() as i64)
+    DayResult::success(visited.len())
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -174,6 +174,6 @@ impl DaySolver for Day {
       possible_walls.insert(potential_wall);
     }
 
-    DayResult::Success(possible_walls.len() as i64)
+    DayResult::success(possible_walls.len())
   }
 }

@@ -74,7 +74,7 @@ impl DaySolver for Day {
         },
         b'\r' => {},
         b => {
-          nodes.entry(b).or_insert(Vec::new()).push((x, y));
+          nodes.entry(b).or_insert(Vec::with_capacity(100)).push((x, y));
           x += 1;
         }
       }
@@ -97,7 +97,7 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(antinodes.len() as i64)
+    DayResult::success(antinodes.len())
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -141,6 +141,6 @@ impl DaySolver for Day {
       }
     }
 
-    DayResult::Success(antinodes.len() as i64)
+    DayResult::success(antinodes.len())
   }
 }

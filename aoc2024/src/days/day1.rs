@@ -27,7 +27,7 @@ impl DaySolver for Day {
 
     let sum = zip(a.iter(), b.iter())
       .fold(0, |acc, (a, b)| acc + a.abs_diff(*b));
-    DayResult::Success(sum as i64)
+    DayResult::success(sum)
   }
 
   fn two(&self, input: &str) -> DayResult {
@@ -50,6 +50,6 @@ impl DaySolver for Day {
     let sum = a.iter()
       .fold(0, |acc, a| acc + a * b[*a as usize]);
 
-    DayResult::Success(sum as i64)
+    DayResult::success(sum)
   }
 }

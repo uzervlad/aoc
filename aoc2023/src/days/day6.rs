@@ -18,7 +18,7 @@ impl DaySolver for Day {
 
     let races = times.zip(distances);
 
-    DayResult::Success(
+    DayResult::success(
       races.map(|r| {
         for i in 1..r.0 {
           if i * (r.0 - i) > r.1 {
@@ -26,7 +26,7 @@ impl DaySolver for Day {
           }
         }
         0
-      }).product::<i32>() as i64
+      }).product::<i32>()
     )
   }
 
@@ -53,8 +53,6 @@ impl DaySolver for Day {
       (cx2 / same_sign).min(cx2 / diff_sign)
     };
 
-    DayResult::Success(
-      (time - root.ceil().max(0.) as u64 * 2 + 1) as i64
-    )
+    DayResult::success(time - root.ceil().max(0.) as u64 * 2 + 1)
   }
 }
