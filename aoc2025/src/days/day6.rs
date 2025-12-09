@@ -69,6 +69,6 @@ impl DaySolver for Day {
   }
 
   fn two(&self, _: &str) -> DayResult {
-    DayResult::Todo
+    DayResult::Note("Alternative TypeScript solution available".into())
   }
 }

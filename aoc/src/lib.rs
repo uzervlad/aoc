@@ -1,15 +1,37 @@
 use std::fmt::Display;
 
+use colored::Colorize as _;
+
 #[derive(Debug)]
 pub enum DayResult {
   Success(DayResultValue),
   Error(String),
   Todo,
+  Note(String),
 }
 
 impl DayResult {
   pub fn success<V: Into<DayResultValue>>(value: V) -> Self {
     Self::Success(value.into())
+  }
+}
+
+impl Display for DayResult {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    match self {
+      DayResult::Success(result) => {
+        write!(f, "Solution: {}", format!("{}", result).yellow())
+      },
+      DayResult::Error(error) => {
+        write!(f, "{}", format!("Error: {}", error).bright_red())
+      },
+      DayResult::Todo => {
+        write!(f, "{}", "Not implemented yet".bright_black())
+      },
+      DayResult::Note(note) => {
+        write!(f, "{}", note)
+      },
+    }
   }
 }
 

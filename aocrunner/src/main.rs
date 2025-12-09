@@ -2,18 +2,19 @@ use std::{env, io::{stdin, stdout, Write}, time::{Duration, Instant}};
 
 use aoc::{DayResolver, DayResult, DayResultValue, DaySolver};
 use clap::Parser;
+use colored::Colorize as _;
 use reqwest::{blocking::ClientBuilder, header::HeaderMap};
 
 fn submit_answer(year: u16, day: u8, level: u8, answer: DayResultValue) {
   if dotenvy::from_path(".env").is_err() {
-    println!("Unable to read .env");
+    println!("{}", "Unable to read .env".bright_red());
     return;
   }
 
   let session = match env::var("AOC_SESSION") {
     Ok(session) => session,
     Err(_) => {
-      println!("No session cookie provided in .env");
+      println!("{}", "No session cookie provided in .env".bright_red());
       return;
     }
   };
@@ -26,7 +27,7 @@ fn submit_answer(year: u16, day: u8, level: u8, answer: DayResultValue) {
     })
     .build() else
   {
-    println!("Unable to create reqwest client");
+    println!("{}", "Unable to create reqwest client".bright_red());
     return;
   };
 
@@ -39,17 +40,17 @@ fn submit_answer(year: u16, day: u8, level: u8, answer: DayResultValue) {
     .form(&params)
     .send() else
   {
-    println!("Unable to submit answer");
+    println!("{}", "Unable to submit answer".bright_red());
     return;
   };
 
   let Ok(data) = response.text() else {
-    println!("Unable to read response");
+    println!("{}", "Unable to read response".bright_red());
     return;
   };
 
   if data.contains("not the right answer") {
-    println!("Incorrect answer");
+    println!("{}", "Incorrect answer".bright_red());
     return;
   }
 }
@@ -112,7 +113,7 @@ fn benchmark_values(mut runs: Vec<u128>) -> (u128, u128, usize) {
 }
 
 fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
-  println!("Running {} times", runs_count);
+  println!("{}", format!("Running {} times", runs_count).bright_blue());
 
   {
     let mut runs = vec![];
@@ -129,10 +130,10 @@ fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
     let mean = Duration::from_nanos(mean as u64);
     let stddev = Duration::from_nanos(stddev as u64);
 
-    println!("Part one:");
+    println!("{}", "Part one:".bold());
     println!("Mean: {:?}", mean);
     println!("Stddev: {:?}", stddev);
-    println!("Removed {} outliers ({:.3}%)", removed, removed as f64 / runs_count as f64 * 100.);
+    println!("{}", format!("Removed {} outliers ({:.3}%)", removed, removed as f64 / runs_count as f64 * 100.).bright_black());
   }
 
   {
@@ -150,57 +151,47 @@ fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
     let mean = Duration::from_nanos(mean as u64);
     let stddev = Duration::from_nanos(stddev as u64);
 
-    println!("Part two:");
+    println!("{}", "Part two:".bold());
     println!("Mean: {:?}", mean);
     println!("Stddev: {:?}", stddev);
-    println!("Removed {} outliers ({:.3}%)", removed, removed as f64 / runs_count as f64 * 100.);
+    println!("{}", format!("Removed {} outliers ({:.3}%)", removed, removed as f64 / runs_count as f64 * 100.).bright_black());
   }
 }
 
 fn run(year: u16, day: u8, solver: Box<dyn DaySolver>, input: &str, submit: bool) {
+  println!("{}", "Part one".bold());
+
   {
     let start = Instant::now();
     let one = solver.one(&input);
     let elapsed = start.elapsed();
 
-    match one {
-      DayResult::Success(one) => {
-        println!("Part one solution: {}", one);
-        println!("Time: {:?}", elapsed);
+    println!("{}", one);
 
-        if submit && prompt_submit() {
-          submit_answer(year, day, 1, one);
-        }
-      },
-      DayResult::Error(error) => {
-        println!("Error while solving part one: {}", error);
-      },
-      DayResult::Todo => {
-        println!("Part one not yet implemented");
-      },
+    if let DayResult::Success(answer) = one {
+      println!("{}", format!("Time: {:?}", elapsed).bright_blue());
+
+      if submit && prompt_submit() {
+        submit_answer(year, day, 1, answer);
+      }
     }
   }
+
+  println!("{}", "Part two".bold());
 
   {
     let start = Instant::now();
     let two = solver.two(&input);
     let elapsed = start.elapsed();
 
-    match two {
-      DayResult::Success(two) => {
-        println!("Part two solution: {}", two);
-        println!("Time: {:?}", elapsed);
+    println!("{}", two);
 
-        if submit && prompt_submit() {
-          submit_answer(year, day, 2, two);
-        }
-      },
-      DayResult::Error(error) => {
-        println!("Error while solving part two: {}", error);
-      },
-      DayResult::Todo => {
-        println!("Part two not yet implemented");
-      },
+    if let DayResult::Success(answer) = two {
+      println!("{}", format!("Time: {:?}", elapsed).bright_blue());
+
+      if submit && prompt_submit() {
+        submit_answer(year, day, 2, answer);
+      }
     }
   }
 }
@@ -221,13 +212,13 @@ fn main() {
   let input = match std::fs::read_to_string(filename) {
     Ok(input) => input,
     Err(_) => {
-      println!("Unable to read input file");
+      println!("{}", "Unable to read input file".bright_red());
       return;
     }
   };
 
   if args.day > 25 {
-    println!("Invalid day number");
+    println!("{}", "Invalid day number".bright_red());
     return;
   }
 

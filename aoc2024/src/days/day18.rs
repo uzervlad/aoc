@@ -54,7 +54,7 @@ impl DaySolver for Day {
 
     match result {
       Some((_, steps)) => DayResult::success(steps),
-      None => DayResult::Error("No path found".to_string()),
+      None => DayResult::Error("No path found".into()),
     }
   }
 

@@ -11,3 +11,4 @@ aoc2023 = { path = "../aoc2023" }
 aoc2024 = { path = "../aoc2024" }
 aoc2025 = { path = "../aoc2025" }
 clap = { version = "4.5.21", features = ["derive"] }
+colored = "3.0.0"
