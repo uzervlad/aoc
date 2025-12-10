@@ -5,51 +5,51 @@ use aoc::{DayResult, DaySolver};
 pub struct Day;
 
 impl DaySolver for Day {
-  fn one(&self, input: &str) -> DayResult {
-    let mut a = [0; 1000];
-    let mut b = [0; 1000];
-    
-    for (i, (_a, _b)) in input.lines()
-      .map(|line| unsafe {
-        (
-          u32::from_str_radix(&line[0..5], 10).unwrap_unchecked(),
-          u32::from_str_radix(&line[8..13], 10).unwrap_unchecked(),
-        )
-      })
-      .enumerate()
-    {
-      a[i] = _a;
-      b[i] = _b;
-    }
+	fn one(&self, input: &str) -> DayResult {
+		let mut a = [0; 1000];
+		let mut b = [0; 1000];
 
-    a.sort_unstable();
-    b.sort_unstable();
+		for (i, (_a, _b)) in input
+			.lines()
+			.map(|line| unsafe {
+				(
+					u32::from_str_radix(&line[0..5], 10).unwrap_unchecked(),
+					u32::from_str_radix(&line[8..13], 10).unwrap_unchecked(),
+				)
+			})
+			.enumerate()
+		{
+			a[i] = _a;
+			b[i] = _b;
+		}
 
-    let sum = zip(a.iter(), b.iter())
-      .fold(0, |acc, (a, b)| acc + a.abs_diff(*b));
-    DayResult::success(sum)
-  }
+		a.sort_unstable();
+		b.sort_unstable();
 
-  fn two(&self, input: &str) -> DayResult {
-    let mut a = [0; 1000];
-    let mut b = [0; 100000];
+		let sum = zip(a.iter(), b.iter()).fold(0, |acc, (a, b)| acc + a.abs_diff(*b));
+		DayResult::success(sum)
+	}
 
-    for (i, (_a, _b)) in input.lines()
-      .map(|line| unsafe {
-        (
-          u32::from_str_radix(&line[0..5], 10).unwrap_unchecked(),
-          u32::from_str_radix(&line[8..13], 10).unwrap_unchecked(),
-        )
-      })
-      .enumerate()
-    {
-      a[i] = _a;
-      b[_b as usize] += 1;
-    }
+	fn two(&self, input: &str) -> DayResult {
+		let mut a = [0; 1000];
+		let mut b = [0; 100000];
 
-    let sum = a.iter()
-      .fold(0, |acc, a| acc + a * b[*a as usize]);
+		for (i, (_a, _b)) in input
+			.lines()
+			.map(|line| unsafe {
+				(
+					u32::from_str_radix(&line[0..5], 10).unwrap_unchecked(),
+					u32::from_str_radix(&line[8..13], 10).unwrap_unchecked(),
+				)
+			})
+			.enumerate()
+		{
+			a[i] = _a;
+			b[_b as usize] += 1;
+		}
 
-    DayResult::success(sum)
-  }
+		let sum = a.iter().fold(0, |acc, a| acc + a * b[*a as usize]);
+
+		DayResult::success(sum)
+	}
 }
