@@ -121,11 +121,12 @@ impl DaySolver for Day {
         let bx = a.0.max(b.0);
         let by = a.1.max(b.1);
 
-        let ok = point_in_poly((ax, ay))
-          && point_in_poly((ax, by))
-          && point_in_poly((bx, ay))
-          && point_in_poly((bx, by));
-        if !ok {
+        if !(
+          point_in_poly((ax, ay))
+            && point_in_poly((ax, by))
+            && point_in_poly((bx, ay))
+            && point_in_poly((bx, by))
+        ) {
           continue
         }
 
