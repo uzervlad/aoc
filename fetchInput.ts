@@ -1,13 +1,8 @@
-export async function fetchInput(year: string, day: string) {
-  if(!year) {
-    console.error('Please provide a year');
-    process.exit(1);
-  }
+export async function fetchInput(year?: string, day?: string) {
+  year ??= new Date().getFullYear().toString();
+  day ??= new Date().getDate().toString();
 
-  if(!day) {
-    console.error('Please provide a day');
-    process.exit(1);
-  }
+  console.log(`Downloading input for year ${year} day ${day}`);
 
   const input = await fetch(`https://adventofcode.com/${year}/day/${day}/input`, {
     headers: {
