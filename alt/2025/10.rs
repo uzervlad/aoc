@@ -1,4 +1,4 @@
-use std::{env::args, fs};
+use std::io::{BufRead, stdin};
 
 use z3::{Optimize, SatResult, ast::{Bool, Int}};
 
@@ -57,13 +57,12 @@ fn part_two(joltage: &[u64], buttons: &[Vec<usize>]) -> usize {
 	}
 
 	for j in 0..joltage.len() {
-		let toggled: Vec<_> = buttons.iter()
+		let total: Int = buttons.iter()
 			.enumerate()
 			.filter(|&(_, btn)| btn.contains(&j))
 			.map(|(i, _)| press_vars[i].clone())
-			.collect();
+			.sum();
 
-		let total = Int::add(&toggled);
 		let target = Int::from_u64(joltage[j]);
 		opt.assert(&total.eq(&target));
 	}
@@ -122,15 +121,13 @@ fn parse_line(line: &str) -> (Vec<bool>, Vec<Vec<usize>>, Vec<u64>) {
 }
 
 fn main() {
-	let filename = args().skip(1).next().unwrap();
-
-	let file = fs::read_to_string(filename).unwrap();
+	let stdin = stdin();
 
 	let mut one = 0;
 	let mut two = 0;
 
-	for line in file.trim().lines() {
-		let (lights, buttons, joltage) = parse_line(line);
+	for line in stdin.lock().lines() {
+		let (lights, buttons, joltage) = parse_line(&line.unwrap());
 		one += part_one(&lights, &buttons);
 		two += part_two(&joltage, &buttons);
 	}
