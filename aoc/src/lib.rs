@@ -29,7 +29,7 @@ impl Display for DayResult {
 				write!(f, "{}", "Not implemented yet".bright_black())
 			}
 			DayResult::Note(note) => {
-				write!(f, "{}", note)
+				write!(f, "{}", note.bright_purple())
 			}
 		}
 	}
