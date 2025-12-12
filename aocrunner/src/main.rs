@@ -115,66 +115,50 @@ fn benchmark_values(mut runs: Vec<u128>) -> (u128, u128, usize) {
 	}
 }
 
+fn benchmark_part<F>(runner: F, input: &str, runs_count: usize)
+where
+	F: Fn(&str) -> DayResult,
+{
+	let mut runs = vec![];
+	for _ in 0..runs_count {
+		let start = Instant::now();
+		let v = runner(&input);
+		let elapsed = start.elapsed();
+
+		let DayResult::Success(_) = v else {
+			println!("{}", v);
+			return;
+		};
+
+		runs.push(elapsed.as_nanos());
+	}
+
+	let (mean, stddev, removed) = benchmark_values(runs);
+
+	let mean = Duration::from_nanos(mean as u64);
+	let stddev = Duration::from_nanos(stddev as u64);
+
+	println!("Mean: {:?}", mean);
+	println!("Stddev: {:?}", stddev);
+	println!(
+		"{}",
+		format!(
+			"Removed {} outliers ({:.3}%)",
+			removed,
+			removed as f64 / runs_count as f64 * 100.
+		)
+		.bright_black()
+	);
+}
+
 fn benchmark(solver: Box<dyn DaySolver>, input: &str, runs_count: usize) {
 	println!("{}", format!("Running {} times", runs_count).bright_blue());
 
-	{
-		let mut runs = vec![];
-		for _ in 0..runs_count {
-			let start = Instant::now();
-			let _ = solver.one(&input);
-			let elapsed = start.elapsed();
+	println!("{}", "Part one:".bold());
+	benchmark_part(|i| solver.one(i), input, runs_count);
 
-			runs.push(elapsed.as_nanos());
-		}
-
-		let (mean, stddev, removed) = benchmark_values(runs);
-
-		let mean = Duration::from_nanos(mean as u64);
-		let stddev = Duration::from_nanos(stddev as u64);
-
-		println!("{}", "Part one:".bold());
-		println!("Mean: {:?}", mean);
-		println!("Stddev: {:?}", stddev);
-		println!(
-			"{}",
-			format!(
-				"Removed {} outliers ({:.3}%)",
-				removed,
-				removed as f64 / runs_count as f64 * 100.
-			)
-			.bright_black()
-		);
-	}
-
-	{
-		let mut runs = vec![];
-		for _ in 0..runs_count {
-			let start = Instant::now();
-			let _ = solver.two(&input);
-			let elapsed = start.elapsed();
-
-			runs.push(elapsed.as_nanos());
-		}
-
-		let (mean, stddev, removed) = benchmark_values(runs);
-
-		let mean = Duration::from_nanos(mean as u64);
-		let stddev = Duration::from_nanos(stddev as u64);
-
-		println!("{}", "Part two:".bold());
-		println!("Mean: {:?}", mean);
-		println!("Stddev: {:?}", stddev);
-		println!(
-			"{}",
-			format!(
-				"Removed {} outliers ({:.3}%)",
-				removed,
-				removed as f64 / runs_count as f64 * 100.
-			)
-			.bright_black()
-		);
-	}
+	println!("{}", "Part two:".bold());
+	benchmark_part(|i| solver.two(i), input, runs_count);
 }
 
 fn run(year: u16, day: u8, solver: Box<dyn DaySolver>, input: &str, submit: bool) {
